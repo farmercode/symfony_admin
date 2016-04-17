@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0039)http://www.400cx.com/platform/login.jsp -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>系统统一登录界面</title>
+    <link href="{{ asset('css/reset.css') }}" rel="stylesheet" type="text/css" media="screen">
+    <link href="{{ asset('css/login.css') }}" rel="stylesheet" type="text/css">
+    <script id="jsBase" type="text/javascript" src="{{ asset('js/base.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-1.7.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.cookie.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/md5.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/validate.js') }}"></script>
+</head>
+
+<body onkeydown="javascript:if(event.keyCode==13)loginSubmit();">
+<input id="idInput" type="hidden" value="company">
+<div class="container clearfix">
+    <!-----------------页面左侧文字------------------>
+    <div class="secL">
+        <h2>Symfony3用户管理平台</h2>
+        <div class="platform_desc">Symfony is a set of PHP Components, a Web Application framework, a Philosophy, and a Community — all working together in harmony.
+        </div>
+    </div>
+    <!-----------------页面右侧表单------------------>
+    <div class="secR">
+        <!-----页面右侧透明背景----->
+        <div class="box-bg"></div>
+        <!--------表单内容------------>
+        <form action="{{ path('login') }}" method="post" name="frmLogin" id="loginForm">
+            <div class="form">
+                <h1>登录平台</h1>
+                <div class="item clearfix">
+                    <label for="userNameIpt"></label>
+                    <input type="text" tabindex="1" id="userNameIpt" name="username" notnull="true" info="用户名" placeholder="登录账号" value="{{ last_username }}">
+                </div>
+                <div class="item itempass clearfix">
+                    <label for="password"></label>
+                    <input type="password" tabindex="2" id="password" name="password" notnull="true" info="密码" autocomplete="off" placeholder="请输入密码">
+                </div>
+
+
+                <div class="item">
+                    <button type="button" tabindex="5" onclick="loginSubmit();" id="btnSubmit" onkeydown="javascript:if(event.keyCode==13){event.returnValue = false}">登&nbsp;&nbsp;录</button>
+                    <!-- 					    <input tabindex="4" onclick="loginSubmit();" class="loginButton" id="btnSubmit" value="登 录" type="button" onkeydown="javascript:if(event.keyCode==13){event.returnValue = false}"/> -->
+                </div>
+                {% if error %}
+                    <div class="item">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function loginSubmit() {
+        if (verification()) {
+            var userName = $("#userNameIpt").val();
+            if(userName.length < 1){
+                alert("登录账号不能为空");
+                return false;
+            }
+            var loginInfo = userName+" ";
+            $.cookie("cloginInfo", des(des_key, loginInfo, 1), {
+                path : '/',
+                secure : false,
+                expires : 30
+            });
+//                 $("#password").val(hex_md5($("input[name='password']").val()));
+            $("#loginForm").submit();
+        }
+    }
+
+    function selectCode() {
+        $('#Code').attr("src", "/platform/loginstickyImg?math=true&rand="+Math.random());
+    }
+
+    $(function() {
+        if ("" != "") {
+            alert("");
+        }
+        if ("" != "") {
+            alert("您已在其他地方登录！");
+        }
+        if ($.cookie("cloginInfo")) {
+            var info =des(des_key,$.cookie("cloginInfo"),0);
+            info=info.split(",");
+            if(info.length > 1){
+                $("#userNameIpt").val(info[1]);
+            }else{
+                $("#userNameIpt").val(info[0].trim());
+            }
+        }
+    });
+
+    //变量定义
+    var gLoginInfo = {};
+
+    //清除联络中心Tab cookie
+    $.cookie("admin_currentTab", null, {
+        path : "/"
+    });
+    $.cookie("currentTab", null, {
+        path : "/"
+    });
+</script>
+
+</body></html>
