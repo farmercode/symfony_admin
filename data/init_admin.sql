@@ -1,0 +1,1 @@
+INSERT INTO `admin_user` ( `name`, `nick_name`, `passwd`, `email`, `sex`, `phone`, `qq`, `add_time`, `update_time`, `is_active`) VALUES ('admin', '超级管理员',md5('123456'), '2494053017@qq.com', '男', '1111999999', '249999', now(), now(), 0);
