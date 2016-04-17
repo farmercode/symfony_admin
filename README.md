@@ -1,6 +1,6 @@
 symfony_admin
 =============
-在执行下面bin/console命令之前,请切换至项目根目录,切配置好symfony的doctrine数据库信息
+在执行下面bin/console命令之前,请切换至项目根目录,切配置好symfony的doctrine数据库信息,并且执行``composer install 来安装所依赖的库
 
 创建数据库
 -------------
