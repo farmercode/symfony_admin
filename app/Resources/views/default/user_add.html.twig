@@ -294,6 +294,9 @@
     </style>
 {% endblock %}
 {% block javascripts %}
+    <script type="text/javascript">
+        var check_user_url = "{{ path('check_user') }}";
+    </script>
     <script type="text/javascript" src="{{ asset('plugins/jQuery/jQuery-2.2.0.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('plugins/fastclick/fastclick.js') }}"></script>

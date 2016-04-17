@@ -12,6 +12,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -111,5 +112,19 @@ class UserController extends Controller
             return $this->redirectToRoute('user_list');
         }
         return $this->render("default/user_edit.html.twig",['user_info' => $user_info]);
+    }
+
+    /**
+     * @Route("/user/check_name",name="check_user")
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function checknameAction(Request $request){
+        $user_name = $request->get('name');
+        $manager = $this->getDoctrine()->getManager();
+        $user_info = $manager->getRepository('AppBundle:User')->findOneByName($user_name);
+        $result = !empty($user_info);
+        return new JsonResponse(['result'=>$result]);
     }
 }

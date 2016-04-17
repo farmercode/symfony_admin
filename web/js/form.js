@@ -11,6 +11,25 @@ $(function(){
             alert("账号不能为空");
             return false;
         }
+        var ajax_result = true;
+        $.ajax({
+            "url" : check_user_url,
+            async : false,
+            "type" : "POST",
+            "dataType" : "json",
+            "data"  : {"name" : user_name},
+            "success" : function(data){
+                console.log(data);
+                if(data.result == true){
+                    ajax_result = false;
+                }
+            }
+        });
+        if(ajax_result == false){
+            alert(user_name + "已经存在");
+            return false;
+        }
+
         //密码检测
         if(passwd1.length < 1 || passwd2.length < 1){
             alert("密码或者重复密码不能为空");
