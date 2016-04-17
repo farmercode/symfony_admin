@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 
 class UserController extends Controller
 {
+
     /**
      * 用户列表
      * @Route("/user/list",name="user_list")
@@ -61,6 +62,7 @@ class UserController extends Controller
                 $user->phone = $phone;
                 $user->qq = $qq;
                 $user->sex = $sex;
+                $user->setIsActive(true);
                 $user->add_time = new \DateTime();
                 $user->update_time = new \DateTime();
                 $em->persist($user);
