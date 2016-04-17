@@ -4,7 +4,7 @@ symfony_admin
 
 创建数据库
 -------------
-bin/console doctrine:database:create
+``bin/console doctrine:database:create
 
 创建数据表
 -------------
